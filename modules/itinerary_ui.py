@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import streamlit as st
 
-from data.mock_data import get_destination_image, get_place_image
 from services.ai_service import edit_itinerary, generate_itinerary
 
 
@@ -28,10 +27,7 @@ def _render_daily_plan(daily_plan: list[dict]) -> None:
             places = day.get("places", [])
             if places:
                 st.markdown("**📍 Recommended Places**")
-                columns = st.columns(min(3, len(places)))
-                for idx, place in enumerate(places):
-                    with columns[idx % len(columns)]:
-                        st.image(get_place_image(place), caption=place, use_container_width=True)
+                st.write(" · ".join(places))
 
 
 def render_itinerary_page() -> None:
@@ -44,9 +40,6 @@ def render_itinerary_page() -> None:
         return
 
     destination = trip_input.get("destination", "")
-
-    # ── Destination hero image ──
-    st.image(get_destination_image(destination), caption=f"✨ {destination.title()}", use_container_width=True)
 
     # ── Generate button ──
     col1, col2 = st.columns([3, 1])

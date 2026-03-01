@@ -1,0 +1,62 @@
+{
+  "users": [
+    {
+      "user_id": "a67e1211-7245-4424-971a-223122a3e7b2",
+      "email": "demo@gmail.com",
+      "password_hash": "3686b8029d354af67f051097d5c8a3c14ac16e4475f0e2aba0af4c654bb9c43e:d92c158731fbadfb3389f6fdff4b4831a1ae29c5c5f161c39bcd1e482e2b167e",
+      "created_at": "2026-03-01T12:28:07.695766+00:00"
+    },
+    {
+      "user_id": "ddafafd3-785c-474f-8477-6be9b0dc3df5",
+      "email": "srivardhan.kondu@gmail.com",
+      "password_hash": "32a9d9e71cec0ba4e0315262c9a6fa0fa8b3e8e4659a94bd20ce06ef0de01535:e63193880eb1243830dd0ae6de7c001451e74d2cb2347e5113fc59133ec3825f",
+      "created_at": "2026-03-01T12:35:19.410393+00:00"
+    }
+  ],
+  "bookings": [
+    {
+      "booking_id": "BK-6A045EFE",
+      "created_at": "2026-03-01T12:39:26.803776+00:00",
+      "user_email": "srivardhan.kondu@gmail.com",
+      "trip": {
+        "destination": "Delhi",
+        "start_date": "2026-03-08",
+        "end_date": "2026-03-11",
+        "travelers": 1
+      },
+      "transport": {
+        "id": "TR-MUM-002",
+        "destination": "delhi",
+        "type": "Train",
+        "provider": "Rajdhani Express",
+        "price": 50.0,
+        "departure_time": "17:00",
+        "arrival_time": "23:30",
+        "duration": "6h 30m",
+        "price_per_traveler": 50.0,
+        "total_price": 50.0
+      },
+      "hotel": {
+        "id": "HT-DEL-001",
+        "destination": "delhi",
+        "name": "The Imperial New Delhi",
+        "price_per_night": 250.0,
+        "rating": 4.7,
+        "location": "Connaught Place",
+        "amenities": [
+          "Free Wi-Fi",
+          "Swimming Pool",
+          "Spa"
+        ],
+        "image_url": "https://images.unsplash.com/photo-1541989521910-0c5b1b5e7c2b"
+      },
+      "payment": {
+        "payment_id": "PAY-384EA6CB9F",
+        "status": "completed",
+        "method": "UPI",
+        "amount": 800.0
+      },
+      "booking_status": "confirmed"
+    }
+  ]
+}

@@ -105,10 +105,11 @@ The system covers the entire travel planning lifecycle:
 - Rolling chat history (last 6 messages) for conversation continuity
 - Keyword-based fallback responses when API is unavailable
 
-### 🖼️ Rich Media Experience
-- **35+ curated place images** from Unsplash for iconic attractions
-- **13 destination hero images** for immersive trip planning
-- Safe image fallback system — never shows broken image icons
+### 🖼️ Clean, Image-Free Interface
+- All pages render without images for a **fast, lightweight experience**
+- Hotel cards display name, star rating, amenities, and pricing in a clean card layout
+- Itinerary recommended places shown as readable text pills (`Place A · Place B · Place C`)
+- No broken image risks — zero external image dependencies
 
 ---
 
@@ -596,6 +597,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 <div align="center">
 
-⭐ Star this repository if you found it helpful!
+**⭐** Star this repository if you found it helpful!
 
 </div>

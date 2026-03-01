@@ -30,6 +30,143 @@ def _trip_day_count(trip_input: dict[str, Any]) -> int:
     return max(1, delta)
 
 
+# Destination → (currency_code, rough_daily_budget_in_that_currency)
+_DESTINATION_CURRENCY_MAP: dict[str, tuple[str, int]] = {
+    # South Asia
+    "india": ("INR", 4000),
+    "delhi": ("INR", 4000),
+    "mumbai": ("INR", 5000),
+    "goa": ("INR", 3500),
+    "jaipur": ("INR", 3000),
+    "bangalore": ("INR", 4500),
+    "hyderabad": ("INR", 4000),
+    "kerala": ("INR", 3500),
+    "agra": ("INR", 3000),
+    "varanasi": ("INR", 2500),
+    "nepal": ("NPR", 5000),
+    "kathmandu": ("NPR", 5000),
+    "sri lanka": ("LKR", 12000),
+    "colombo": ("LKR", 12000),
+    "pakistan": ("PKR", 15000),
+    "bangladesh": ("BDT", 6000),
+    # East Asia
+    "japan": ("JPY", 15000),
+    "tokyo": ("JPY", 18000),
+    "osaka": ("JPY", 14000),
+    "kyoto": ("JPY", 13000),
+    "china": ("CNY", 600),
+    "beijing": ("CNY", 700),
+    "shanghai": ("CNY", 800),
+    "south korea": ("KRW", 120000),
+    "seoul": ("KRW", 130000),
+    "taiwan": ("TWD", 3000),
+    # Southeast Asia
+    "thailand": ("THB", 3000),
+    "bangkok": ("THB", 3500),
+    "phuket": ("THB", 4000),
+    "bali": ("IDR", 800000),
+    "indonesia": ("IDR", 700000),
+    "jakarta": ("IDR", 750000),
+    "vietnam": ("VND", 800000),
+    "hanoi": ("VND", 700000),
+    "ho chi minh": ("VND", 900000),
+    "singapore": ("SGD", 250),
+    "malaysia": ("MYR", 400),
+    "kuala lumpur": ("MYR", 450),
+    "philippines": ("PHP", 5000),
+    "manila": ("PHP", 5500),
+    "cambodia": ("USD", 80),
+    "phnom penh": ("USD", 80),
+    # Middle East
+    "dubai": ("AED", 600),
+    "uae": ("AED", 600),
+    "abu dhabi": ("AED", 550),
+    "saudi arabia": ("SAR", 500),
+    "qatar": ("QAR", 500),
+    "turkey": ("TRY", 3000),
+    "istanbul": ("TRY", 3500),
+    # Europe
+    "france": ("EUR", 180),
+    "paris": ("EUR", 220),
+    "germany": ("EUR", 160),
+    "berlin": ("EUR", 160),
+    "italy": ("EUR", 170),
+    "rome": ("EUR", 190),
+    "florence": ("EUR", 180),
+    "spain": ("EUR", 150),
+    "barcelona": ("EUR", 180),
+    "madrid": ("EUR", 160),
+    "amsterdam": ("EUR", 200),
+    "netherlands": ("EUR", 190),
+    "greece": ("EUR", 140),
+    "athens": ("EUR", 140),
+    "portugal": ("EUR", 130),
+    "lisbon": ("EUR", 135),
+    "uk": ("GBP", 150),
+    "london": ("GBP", 180),
+    "edinburgh": ("GBP", 140),
+    "switzerland": ("CHF", 250),
+    "zurich": ("CHF", 280),
+    "norway": ("NOK", 1800),
+    "sweden": ("SEK", 1600),
+    "denmark": ("DKK", 1200),
+    "austria": ("EUR", 170),
+    "vienna": ("EUR", 175),
+    "czech republic": ("CZK", 2500),
+    "prague": ("CZK", 2500),
+    "poland": ("PLN", 350),
+    "croatia": ("EUR", 130),
+    # Americas
+    "usa": ("USD", 200),
+    "new york": ("USD", 300),
+    "los angeles": ("USD", 250),
+    "miami": ("USD", 230),
+    "chicago": ("USD", 220),
+    "san francisco": ("USD", 270),
+    "las vegas": ("USD", 260),
+    "canada": ("CAD", 200),
+    "toronto": ("CAD", 220),
+    "vancouver": ("CAD", 230),
+    "mexico": ("MXN", 1500),
+    "mexico city": ("MXN", 1600),
+    "cancun": ("MXN", 2000),
+    "brazil": ("BRL", 500),
+    "rio de janeiro": ("BRL", 600),
+    "argentina": ("ARS", 20000),
+    "buenos aires": ("ARS", 22000),
+    "peru": ("PEN", 400),
+    "machu picchu": ("PEN", 350),
+    # Africa & Oceania
+    "south africa": ("ZAR", 1500),
+    "cape town": ("ZAR", 1800),
+    "johannesburg": ("ZAR", 1500),
+    "kenya": ("KES", 12000),
+    "nairobi": ("KES", 12000),
+    "egypt": ("EGP", 3000),
+    "cairo": ("EGP", 3000),
+    "morocco": ("MAD", 800),
+    "marrakech": ("MAD", 900),
+    "australia": ("AUD", 220),
+    "sydney": ("AUD", 260),
+    "melbourne": ("AUD", 240),
+    "new zealand": ("NZD", 200),
+    "auckland": ("NZD", 210),
+}
+
+
+def _get_currency_for_destination(destination: str) -> tuple[str, int]:
+    """Return (currency_code, daily_budget) for a destination. Defaults to USD."""
+    key = destination.strip().lower()
+    # Exact match first
+    if key in _DESTINATION_CURRENCY_MAP:
+        return _DESTINATION_CURRENCY_MAP[key]
+    # Partial match (e.g. "South Goa" → "goa")
+    for dest_key, value in _DESTINATION_CURRENCY_MAP.items():
+        if dest_key in key or key in dest_key:
+            return value
+    return ("USD", 170)
+
+
 def _build_mock_itinerary(trip_input: dict[str, Any]) -> dict[str, Any]:
     destination = str(trip_input.get("destination", "your destination")).strip() or "your destination"
     days = _trip_day_count(trip_input)
@@ -62,15 +199,17 @@ def _build_mock_itinerary(trip_input: dict[str, Any]) -> dict[str, Any]:
             }
         )
 
-    budget_multiplier = {"Budget": 110, "Mid-range": 200, "Luxury": 380}.get(budget_range, 170)
-    estimated_total_cost = float(days * travelers * budget_multiplier)
+    currency, base_daily = _get_currency_for_destination(destination)
+    budget_multiplier_map = {"Budget": 0.6, "Mid-range": 1.0, "Luxury": 2.0}
+    multiplier = budget_multiplier_map.get(budget_range, 1.0)
+    estimated_total_cost = float(days * travelers * base_daily * multiplier)
 
     return {
         "destination": destination.title(),
         "overview": f"{days}-day itinerary for {destination.title()} tailored for {travelers} traveler(s).",
         "daily_plan": daily_plan,
         "estimated_total_cost": round(estimated_total_cost, 2),
-        "currency": "USD",
+        "currency": currency,
         "source": "mock_fallback",
     }
 
@@ -144,12 +283,19 @@ def _sanitize_itinerary(raw: dict[str, Any], trip_input: dict[str, Any]) -> dict
     except (TypeError, ValueError):
         estimated_total_cost = _build_mock_itinerary(trip_input)["estimated_total_cost"]
 
+    # Determine local currency — prefer what the LLM returned, fallback to lookup
+    raw_currency = str(raw.get("currency") or "").strip().upper()
+    if not raw_currency or raw_currency == "USD":
+        dest = str(trip_input.get("destination", ""))
+        detected_currency, _ = _get_currency_for_destination(dest)
+        raw_currency = detected_currency
+
     return {
         "destination": destination,
         "overview": overview,
         "daily_plan": normalized_daily_plan,
         "estimated_total_cost": round(estimated_total_cost, 2),
-        "currency": str(raw.get("currency") or "USD"),
+        "currency": raw_currency,
         "source": str(raw.get("source") or "openai"),
     }
 
@@ -170,6 +316,8 @@ def generate_itinerary(trip_input: dict[str, Any]) -> dict[str, Any]:
             "content": (
                 "You are a travel planner. Return valid JSON only with keys: "
                 "destination, overview, daily_plan, estimated_total_cost, currency, source. "
+                "IMPORTANT: Use the LOCAL currency of the destination country (e.g. INR for India, EUR for Europe, JPY for Japan, GBP for UK, AED for Dubai). "
+                "Do NOT use USD unless the destination is the USA or a USD-pegged country. "
                 "daily_plan must be a list of day objects with keys: day, title, morning, afternoon, evening, places, note."
             ),
         },
