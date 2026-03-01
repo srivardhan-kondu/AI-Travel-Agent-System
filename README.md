@@ -596,8 +596,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 <div align="center">
 
-**Built with ❤️ using Streamlit and OpenAI**
-
 ⭐ Star this repository if you found it helpful!
 
 </div>
