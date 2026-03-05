@@ -11,6 +11,18 @@
       "email": "srivardhan.kondu@gmail.com",
       "password_hash": "32a9d9e71cec0ba4e0315262c9a6fa0fa8b3e8e4659a94bd20ce06ef0de01535:e63193880eb1243830dd0ae6de7c001451e74d2cb2347e5113fc59133ec3825f",
       "created_at": "2026-03-01T12:35:19.410393+00:00"
+    },
+    {
+      "user_id": "ddf0598e-09d6-4423-9fec-66ddb6d6b1f3",
+      "email": "test@gmail.com",
+      "password_hash": "ef3666281f0aff4ddb3b99a427aaf4db49ee00bc468a73f0daff36e0c6693909:10717863306bfc067785a82c8f059b609f997d0ef58299a42c42da821b8a1e94",
+      "created_at": "2026-03-01T15:36:02.217166+00:00"
+    },
+    {
+      "user_id": "7e09cd6e-89a1-4356-8c33-b67878d39b34",
+      "email": "sri@gmail.com",
+      "password_hash": "f84b7849320871e6a03ceca7e4659bf32e0813f1a7ca88c6d1174c4090b0fc46:1675d6c55a7f0d49ca38711e7a8eae6e800c7e27b31c68ee7433269ef2160270",
+      "created_at": "2026-03-05T18:06:32.440241+00:00"
     }
   ],
   "bookings": [
@@ -55,6 +67,51 @@
         "status": "completed",
         "method": "UPI",
         "amount": 800.0
+      },
+      "booking_status": "confirmed"
+    },
+    {
+      "booking_id": "BK-40608455",
+      "created_at": "2026-03-01T15:38:38.906625+00:00",
+      "user_email": "test@gmail.com",
+      "trip": {
+        "destination": "Mumbai",
+        "start_date": "2026-03-08",
+        "end_date": "2026-03-11",
+        "travelers": 1
+      },
+      "transport": {
+        "id": "TR-HYD-MUM-002",
+        "destination": "mumbai",
+        "type": "Train",
+        "provider": "Deccan Express",
+        "price": 25.5,
+        "departure_time": "18:10",
+        "arrival_time": "22:30",
+        "duration": "4h 20m",
+        "price_per_traveler": 25.5,
+        "total_price": 25.5
+      },
+      "hotel": {
+        "id": "HT-MUM-003",
+        "destination": "mumbai",
+        "name": "JW Marriott Mumbai Juhu",
+        "price_per_night": 250.0,
+        "rating": 4.5,
+        "location": "Juhu",
+        "amenities": [
+          "Private Beach",
+          "Outdoor Pool",
+          "Free Parking",
+          "Airport Shuttle"
+        ],
+        "image_url": "https://images.unsplash.com/photo-1516640472029-5d9c1f0d3e7b"
+      },
+      "payment": {
+        "payment_id": "PAY-ED1FF3417D",
+        "status": "completed",
+        "method": "Net Banking",
+        "amount": 775.5
       },
       "booking_status": "confirmed"
     }
