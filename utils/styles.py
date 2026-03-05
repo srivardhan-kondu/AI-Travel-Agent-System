@@ -197,6 +197,134 @@ div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"] {
     overflow: hidden;
     min-width: 0;
 }
+
+/* ═══════════ RESPONSIVE BREAKPOINTS ═══════════ */
+
+/* ── Tablet (≤ 1024px) ── */
+@media (max-width: 1024px) {
+    section.main > div.block-container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    div[data-testid="stMetric"] {
+        padding: 10px 12px;
+    }
+    div[data-testid="stMetric"] div[data-testid="stMetricValue"] {
+        font-size: 1.25rem !important;
+    }
+    div[data-testid="stMetric"] label {
+        font-size: 0.7rem !important;
+    }
+
+    .stat-card {
+        padding: 14px;
+    }
+    .stat-card h3 {
+        font-size: 1.4rem;
+    }
+}
+
+/* ── Small tablet / large phone (≤ 768px) ── */
+@media (max-width: 768px) {
+    /* Stack columns vertically */
+    div[data-testid="stHorizontalBlock"] {
+        flex-wrap: wrap !important;
+    }
+    div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"] {
+        flex: 1 1 100% !important;
+        min-width: 100% !important;
+        margin-bottom: 8px;
+    }
+
+    section.main > div.block-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    div[data-testid="stForm"] {
+        padding: 16px;
+        border-radius: 10px;
+    }
+
+    div[data-testid="stMetric"] {
+        padding: 12px 14px;
+        border-radius: 10px;
+    }
+    div[data-testid="stMetric"] div[data-testid="stMetricValue"] {
+        font-size: 1.3rem !important;
+    }
+
+    details[data-testid="stExpander"] {
+        border-radius: 10px;
+    }
+
+    .stTabs [data-baseweb="tab"] {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+    }
+
+    section[data-testid="stSidebar"] {
+        min-width: 220px !important;
+        max-width: 220px !important;
+    }
+}
+
+/* ── Phone (≤ 480px) ── */
+@media (max-width: 480px) {
+    section.main > div.block-container {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        padding-top: 1.5rem;
+    }
+
+    div[data-testid="stForm"] {
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    div[data-testid="stMetric"] {
+        padding: 10px;
+        border-radius: 8px;
+    }
+    div[data-testid="stMetric"] div[data-testid="stMetricValue"] {
+        font-size: 1.1rem !important;
+    }
+    div[data-testid="stMetric"] label {
+        font-size: 0.65rem !important;
+    }
+
+    .stButton > button {
+        border-radius: 8px;
+        font-size: 0.85rem;
+        padding: 8px 12px;
+    }
+
+    details[data-testid="stExpander"] {
+        border-radius: 8px;
+        margin-bottom: 6px;
+    }
+
+    .stTabs [data-baseweb="tab"] {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    div[data-testid="stChatMessage"] {
+        border-radius: 10px;
+    }
+
+    .stat-card {
+        padding: 12px;
+        border-radius: 10px;
+    }
+    .stat-card h3 {
+        font-size: 1.2rem;
+    }
+    .stat-card p {
+        font-size: 0.75rem;
+    }
+}
 </style>
 """
 
