@@ -9,9 +9,17 @@ html, body, [class*="st-"] {
     font-family: 'Inter', sans-serif;
 }
 
-/* ─── Page header gradient ─── */
+/* ─── Page header — solid opaque background + high z-index ─── */
 header[data-testid="stHeader"] {
-    background: linear-gradient(90deg, #0E1117 0%, #1A1F2E 100%);
+    background: #0E1117 !important;
+    z-index: 999 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* ─── Main content area: push below header so nothing hides behind it ─── */
+section.main > div.block-container {
+    padding-top: 2rem;
 }
 
 /* ─── Sidebar styling ─── */
@@ -35,21 +43,28 @@ div[data-testid="stMetric"] {
     background: linear-gradient(135deg, #1A1F2E 0%, #232B3E 100%);
     border: 1px solid rgba(108, 99, 255, 0.2);
     border-radius: 12px;
-    padding: 16px 20px;
+    padding: 14px 16px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
 div[data-testid="stMetric"] label {
     color: #8B92A5 !important;
-    font-size: 0.85rem !important;
+    font-size: 0.8rem !important;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 div[data-testid="stMetric"] div[data-testid="stMetricValue"] {
     color: #6C63FF !important;
     font-weight: 700 !important;
-    font-size: 2rem !important;
+    font-size: 1.5rem !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* ─── Buttons ─── */
@@ -70,12 +85,22 @@ div[data-testid="stMetric"] div[data-testid="stMetricValue"] {
     border: none;
 }
 
-/* ─── Expanders ─── */
+/* ─── Expanders — prevent title overlap ─── */
 details[data-testid="stExpander"] {
     background: #1A1F2E;
     border: 1px solid rgba(108, 99, 255, 0.12);
     border-radius: 12px;
     margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+}
+
+details[data-testid="stExpander"] summary {
+    white-space: normal;
+    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* ─── Dataframes ─── */
@@ -165,6 +190,12 @@ hr {
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
+}
+
+/* ─── Columns: prevent content overlap in tight grids ─── */
+div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"] {
+    overflow: hidden;
+    min-width: 0;
 }
 </style>
 """
